@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s  # How frequently to scrape targets by default
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'fastapi-app'
+    static_configs:
+      - targets: ['app:8000']  # The service name of your FastAPI app in docker-compose
