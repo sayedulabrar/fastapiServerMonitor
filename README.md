@@ -10,6 +10,13 @@ This is a production-ready FastAPI application that implements system-level and 
 - Custom middleware for HTTP metrics
 - Background tasks for system metrics
 - Docker-compatible deployment
+**Library integrations:**
+
+-   `psutil`: for real-time system resource monitoring
+    
+-   `middleware`: custom FastAPI middleware for HTTP-level metrics
+    
+-   `asyncio`: supports asynchronous execution for background tasks
 
 ---
 
