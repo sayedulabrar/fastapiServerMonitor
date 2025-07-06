@@ -51,7 +51,7 @@ The **`prometheus.yml`** file tells Prometheus how and where to collect metrics.
 * **Scrape interval:** every 15 seconds
 * **Target:** the FastAPI app at `app:8000`
 
-The FastAPI application must expose a **`/metrics` endpoint**, typically by using a library like [`prometheus-fastapi-instrumentator`](https://github.com/trallnag/prometheus-fastapi-instrumentator). This enables Prometheus to collect standard metrics about request counts, latencies, and more.
+The FastAPI application must expose a **`/metrics` endpoint**, typically by using a library like [`prometheus_client`](https://pypi.org/project/prometheus-client/). This enables Prometheus to collect standard metrics about request counts, latencies, and more.
 
 ---
 
