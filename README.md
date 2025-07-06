@@ -10,6 +10,66 @@ This is a production-ready FastAPI application that implements system-level and 
 - Custom middleware for HTTP metrics
 - Background tasks for system metrics
 - Docker-compatible deployment
+
+---
+
+## 📦 FastAPI Backend Setup with Docker Compose & Prometheus
+
+This project uses **Docker Compose** to orchestrate a **FastAPI backend**, a **PostgreSQL database**, and a **Prometheus monitoring service**.
+
+---
+
+### 🔧 Docker Compose Overview
+
+We define three main services in the `docker-compose.yml` file:
+
+* **`app`** – Runs the **FastAPI** application using `uvicorn`, listening on **port 8000**. It is built from a custom **Dockerfile** and depends on the database service.
+* **`db`** – A **PostgreSQL** container used for persistent data storage. It is initialized with a database, user, and password.
+* **`prometheus`** – A **Prometheus** container configured to monitor the `app` service. It reads from a local configuration file (`prometheus.yml`) and runs on **port 9090**.
+
+A **named volume** is used to persist database data across container restarts. The FastAPI app and Prometheus communicate internally through service names defined in Docker Compose (e.g., `app:8000`).
+
+---
+
+### 🐳 FastAPI Docker Setup
+
+The **Dockerfile** uses a lightweight **Python 3.8 Slim** base image. It:
+
+* Installs dependencies from `requirements.txt`
+* Copies application files into the container
+* Optionally includes a `wait-for.sh` script to delay startup until PostgreSQL is ready
+* Launches the FastAPI app with **Uvicorn**
+
+The app is exposed on **`0.0.0.0:8000`** for accessibility inside the Docker network.
+
+---
+
+### 📊 Prometheus Monitoring Configuration
+
+The **`prometheus.yml`** file tells Prometheus how and where to collect metrics. Key settings include:
+
+* **Scrape interval:** every 15 seconds
+* **Target:** the FastAPI app at `app:8000`
+
+The FastAPI application must expose a **`/metrics` endpoint**, typically by using a library like [`prometheus-fastapi-instrumentator`](https://github.com/trallnag/prometheus-fastapi-instrumentator). This enables Prometheus to collect standard metrics about request counts, latencies, and more.
+
+---
+
+### ▶️ How to Run
+
+To build and launch all services, simply run:
+
+```bash
+docker-compose up --build
+```
+
+Once started:
+
+* Access the **FastAPI backend** at: [http://localhost:8000](http://localhost:8000)
+* Open the **Prometheus UI** at: [http://localhost:9090](http://localhost:9090)
+
+---
+
 # For Local Server 
 
 ## Setup and Installation
@@ -162,7 +222,7 @@ Edit `app/config.py` to modify:
 - Metrics collection interval
 - Histogram buckets
 
-## Usage Example
+## Fastapi Usage Example
 - Create: `POST /products` with `{"id": 1, "name": "Laptop", "price": 999.99, "amount": 10}` . It supports array of Product object insert too.
 - Update: `PUT /products/1` with `{"id": 1, "name": "Laptop", "price": 1099.99, "amount": 8}`
 - Read: `GET /products/1` or `GET /products`
