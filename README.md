@@ -392,25 +392,7 @@ Docker Compose version v2.x.x
 
 ----------
 
-## 📦 Step 5: Clone Repo and Build Docker Containers
-
-# Clone your GitHub repo
-```bash
-git clone https://github.com/your-username/your-repo.git
-
-cd your-repo
-
-  
-
-# Run docker-compose
-
-docker-compose up --build -d
-```
-  
-
-----------
-
-## 🌐 Step 6: Update Inbound Rules in EC2 Security Group
+## 🌐 Step 5: Update Inbound Rules in EC2 Security Group
 
 Go to EC2 > Instance > Security → Edit Inbound Rules and add:
 
@@ -429,7 +411,7 @@ Go to EC2 > Instance > Security → Edit Inbound Rules and add:
   
   
 
-# 🔐 DockerHub Image Usage: Public vs Private
+# Step 6: 🔐 DockerHub Image Usage: Public vs Private
 
 ----------
 
@@ -491,7 +473,7 @@ Or use Docker Hub Access Tokens (recommended over password):
 
 ----------
 
-# 📁 Git Repo Best Practices for Your Dockerized App
+# Step 7: 📁 Git Repo Best Practices for Your Dockerized App
 
 ----------
 
@@ -536,12 +518,13 @@ Or use Docker Hub Access Tokens (recommended over password):
 
 -   Create a .env file on the EC2 server, e.g.:
     
-
+```yaml
 SECRET_KEY=your-prod-secret
 
 DATABASE_URL=postgresql://postgres:postgres@db:5432/product_db
 
 -   Reference it from docker-compose.yml:
+```
     
 ```yaml
 services:
@@ -572,7 +555,25 @@ This way, .env will never be pushed.
     
 -   The Git repo on your server only needs the files that orchestrate the deployment (docker-compose.yml, prometheus.yml, Dockerfile if you want to build locally, requirements.txt if building locally).  
       
-    
+
+
+----------
+
+## 📦 Step 8: Clone Repo and Build Docker Containers
+
+# Clone your GitHub repo
+```bash
+git clone https://github.com/your-username/your-repo.git
+
+cd your-repo
+
+  
+
+# Run docker-compose
+
+docker-compose up --build -d
+```
+
 
 ----------
 
@@ -604,7 +605,7 @@ This way, .env will never be pushed.
 
   
 
-## 🌍 Step 8: Access Services from Browser
+## 🌍 Step 9: Access Services from Browser
 
 ## Use your EC2 Public IP:(Access it from the EC2 server running)
 
