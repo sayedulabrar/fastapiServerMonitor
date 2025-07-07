@@ -227,7 +227,7 @@ HTTP metrics provide comprehensive visibility into the application’s request l
     - **95th Percentile Latency**: Calculated as `histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{endpoint="/data",method="GET"}[5m])) by (le))`. Measures the 95th percentile latency for specific endpoints and methods, indicating the latency experienced by 95% of requests.
     - **Average Latency**: Calculated as `avg(rate(http_request_duration_seconds_sum[5m])) / avg(rate(http_request_duration_seconds_count[5m]))`. Provides the average request duration over a 5-minute window.
 
-- **Metric Name**: Request and Response Size Histogram
+- **Metric Name**: Request and Response Size Histogram (`http_request_size_bytes` , `http_response_size_bytes`)
   - **Type**: Histogram (if implemented)
   - **Description**: Tracks the size of HTTP requests and responses in bytes.
   - **Purpose**: Monitors payload sizes to detect unusually large requests or responses that could impact performance.

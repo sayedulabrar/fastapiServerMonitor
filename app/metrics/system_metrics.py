@@ -1,6 +1,7 @@
 import psutil
 import time
 import asyncio
+from app.config import settings
 from prometheus_client import Gauge
 
 # Custom metrics only — avoid default Prometheus metric names
@@ -39,9 +40,9 @@ async def collect_system_metrics():
             prev_cpu_time = current_cpu_time
             prev_time = current_time
 
-            await asyncio.sleep(10)
+            await asyncio.sleep(settings.metrics_collection_interval)
 
         except Exception as e:
             print(f"Error collecting system metrics: {e}")
-            await asyncio.sleep(10)
+            await asyncio.sleep(settings.metrics_collection_interval)
 
