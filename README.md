@@ -105,14 +105,43 @@ System metrics provide insights into the application’s resource consumption an
 
 ### 1.1 CPU Metrics
 
+
 - **Metric Name**: `process_cpu_seconds_total`
+
   - **Type**: Counter
   - **Description**: Measures the total CPU time (in seconds) consumed by the application process since it started.
   - **Purpose**: Indicates the cumulative CPU usage, helping to identify whether the application is CPU-intensive or if CPU resources are being overutilized.
   - **Labels**: None
+
   - **Derived Metrics**:
-    - **CPU Usage Rate**: Calculated as `rate(process_cpu_seconds_total[5m])`. This shows the rate of CPU time consumption over a 5-minute window, useful for detecting spikes in CPU demand.
-    - **CPU Utilization Percentage**: Represents the percentage of available CPU resources used by the process, calculated by comparing `process_cpu_seconds_total` to total system CPU availability.
+    -  **CPU Usage Rate**:
+
+    -  **PromQL**: `rate(process_cpu_seconds_total[5m])`
+    -  **Explanation**: Shows the rate of CPU time consumption per second over a 5-minute window. Useful for detecting CPU spikes or sustained high usage.
+
+
+- **Metric Name**: `custom_cpu_utilization_percentage`
+
+  - **Type**: Gauge
+  - **Description**: Represents the percentage of available CPU resources being used by the process, normalized across all CPU cores.
+  - **Purpose**: Provides an intuitive, real-time view of how much total CPU capacity the process is consuming.
+  - **Labels**: None
+
+  - **Calculation**:
+  
+  $$
+  \text{{CPU Utilization (\%)}} = \left( \frac{{\Delta \text{{process CPU time}}}}{{\Delta \text{{wall time}} \times \text{{CPU core count}}}} \right) \times 100
+  $$
+  
+      Computed in code using `psutil`, updated periodically (e.g., every 10 seconds).
+  
+  - **Usage Recommendations**:
+  
+    - Use `custom_cpu_utilization_percentage` for real-time CPU load.
+    - Use `avg_over_time(custom_cpu_utilization_percentage[5m])` to analyze trends or build smoothed dashboards.
+    - Avoid using `rate(...)` on this metric, as it's a Gauge.
+
+
 
 ### 1.2 Memory Metrics
 
